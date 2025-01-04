@@ -1,19 +1,25 @@
-humanoid:
-  - name: "Humanoid NPCs"
+red:
+  - name: "Default"
     pattern: "%w+"
-    is_creature: false
-insect:
+blue:
+  - name: "Crustaceans"
+    pattern: "crab"
+    priority: 900
+green:
   - name: "Kwama"
     pattern: "[kK]wama"
+    priority: 900
   - name: "Scrib"
     pattern: "[sS]crib"
-machine:
+    priority: 900
+oil:
   - name: "Dwemer Constructs"
     pattern: "[cC]enturion"
-undead:
+    priority: 900
+dust:
   - name: "Skeleton"
     pattern: "[sS]keleton"
-  - name: "Zombie"
-    pattern: "[zZ]ombie"
+    priority: 900
   - name: "Bonewalker"
     pattern: "[bB]onewalker"
+    priority: 900

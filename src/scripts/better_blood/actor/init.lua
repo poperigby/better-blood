@@ -25,7 +25,6 @@ local function findBloodType()
     end
 
     if next(matches) == nil then
-        print("Cannot find blood type of actor: ", self.object.recordId)
         return nil
     end
 
@@ -44,9 +43,7 @@ end
 
 local function onInit()
     bloodType = findBloodType()
-    if bloodType ~= nil then
-        print("Found", bloodType, "blood type for actor", self.object.recordId)
-    end
+    print(self.object.recordId, ":", bloodType)
 end
 
 local function onUpdate()
