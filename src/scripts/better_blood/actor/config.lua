@@ -5,7 +5,7 @@ local function mergeTables(target, source)
     -- A helper function to ensure default values
     local function setDefaults(entry)
         entry.is_creature = entry.is_creature == nil and true or entry.is_creature
-        entry.priority = entry.priority or 1000
+        entry.priority = entry.priority or 900
     end
 
     -- Iterate through each category in the source table

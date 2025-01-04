@@ -1,25 +1,33 @@
 red:
-  - name: "Default"
+  - name: "Default Creatures"
     pattern: "%w+"
+    priority: 1000
+  - name: "Default NPCs"
+    pattern: "%w+"
+    is_creature: false
+    priority: 1000
 blue:
-  - name: "Crustaceans"
+  - name: "Crabs"
     pattern: "crab"
-    priority: 900
+  - name: "Dreugh"
+    pattern: "dreugh"
+ectoplasm:
+  - name: "Ghosts"
+    pattern: "ghost"
+  - name: "Wraiths"
+    pattern: "wraith"
 green:
   - name: "Kwama"
     pattern: "[kK]wama"
-    priority: 900
   - name: "Scrib"
     pattern: "[sS]crib"
-    priority: 900
+  - name: "Netch"
+    pattern: "[nN]etch"
 oil:
   - name: "Dwemer Constructs"
     pattern: "[cC]enturion"
-    priority: 900
 dust:
   - name: "Skeleton"
     pattern: "[sS]keleton"
-    priority: 900
   - name: "Bonewalker"
     pattern: "[bB]onewalker"
-    priority: 900

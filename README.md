@@ -20,7 +20,7 @@ local blood_types = {
 
             -- Integer 0-1000: A priority. 0 is the highest priority, and 1000 is the lowest.
             -- Higher priority matches will override the blood type of lower priority matches
-            -- (default: 1000)
+            -- (default: 900)
             priority = 1000,
         }
     }
