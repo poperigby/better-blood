@@ -24,9 +24,4 @@ local function onInit()
     print(aux_util.deepToString(blood_types, 3))
 end
 
-return {
-    engineHandlers = {
-        onLoad = onInit,
-        onInit = onInit,
-    }
-}
+return onInit
