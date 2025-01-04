@@ -30,14 +30,16 @@ local function findBloodType()
     end
 
     -- Find highest priority match
-    local best_match = matches[1]
-    for match in ipairs(matches) do
-        if matches[match].priority > best_match.priority then
-            best_match = matches[match]
+    local highestPriorityMatch = matches[1]
+    for _, match in ipairs(matches) do
+        -- A lower priority number means a higher priority
+        if match.priority < highestPriorityMatch.priority then
+            highestPriorityMatch = match
         end
     end
 
-    return best_match.parent
+    -- The parent is the blood type
+    return highestPriorityMatch.parent
 end
 
 local function onInit()
