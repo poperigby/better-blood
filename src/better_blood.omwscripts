@@ -1,1 +1,2 @@
+GLOBAL: scripts/better_blood/config.lua
 NPC, CREATURE: scripts/better_blood/actor.lua
