@@ -1,12 +1,20 @@
 local self = require("openmw.self")
 local types = require("openmw.types")
-local loadConfig = require("scripts.better_blood.actor.config")
+local aux_util = require("openmw_aux.util")
+local load_config = require("scripts.better_blood.actor.config")
 
-local healthObj = types.Actor.stats.dynamic.health(self)
-local old_health = healthObj.current
+local health = types.Actor.stats.dynamic.health(self)
+local old_health = health.current
 
-local function onUpdate(_delta)
-    local new_health = healthObj.current
+local blood_types = {}
+
+local function on_init()
+    blood_types = load_config()
+    print(aux_util.deepToString(blood_types))
+end
+
+local function on_update(_delta)
+    local new_health = health.current
 
     local damage = old_health - new_health
 
@@ -19,8 +27,8 @@ end
 
 return {
     engineHandlers = {
-        onUpdate = onUpdate,
-        onInit = loadConfig,
-        onLoad = loadConfig,
+        onLoad = on_init,
+        onInit = on_init,
+        onUpdate = on_update,
     }
 }
