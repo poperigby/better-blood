@@ -1,34 +1,69 @@
 local self = require("openmw.self")
 local types = require("openmw.types")
 local aux_util = require("openmw_aux.util")
-local load_config = require("scripts.better_blood.actor.config")
+local loadConfig = require("scripts.better_blood.actor.config")
+
+local bloodType
 
 local health = types.Actor.stats.dynamic.health(self)
-local old_health = health.current
+local oldHealth = health.current
 
-local blood_types = {}
+local function findBloodType()
+    local bloodTypes = loadConfig()
+    local recordId = self.object.recordId
+    local isCreature = types.Creature.objectIsInstance(self.object)
 
-local function on_init()
-    blood_types = load_config()
-    print(aux_util.deepToString(blood_types))
+    local matches = {}
+
+    for parent, entries in pairs(bloodTypes) do
+        for _, entry in ipairs(entries) do
+            if recordId:match(entry.pattern) and isCreature == entry.is_creature then
+                entry.parent = parent
+                table.insert(matches, entry)
+            end
+        end
+    end
+
+    if next(matches) == nil then
+        print("Cannot find blood type of actor: ", self.object.recordId)
+        return nil
+    end
+
+    -- Find highest priority match
+    local best_match = matches[1]
+    for match in ipairs(matches) do
+        if matches[match].priority > best_match.priority then
+            best_match = matches[match]
+        end
+    end
+
+    return best_match.parent
 end
 
-local function on_update(_delta)
-    local new_health = health.current
+local function onInit()
+    bloodType = findBloodType()
+    if bloodType ~= nil then
+        print("Found", bloodType, "blood type for actor", self.object.recordId)
+    end
+end
 
-    local damage = old_health - new_health
+local function onUpdate()
+    local newHealth = health.current
 
-    old_health = new_health
+    local damage = oldHealth - newHealth
+
+    oldHealth = newHealth
 
     if damage > 0 then
         print(damage)
+        print(bloodType)
     end
 end
 
 return {
     engineHandlers = {
-        onLoad = on_init,
-        onInit = on_init,
-        onUpdate = on_update,
+        onLoad = onInit,
+        onInit = onInit,
+        onUpdate = onUpdate,
     }
 }
