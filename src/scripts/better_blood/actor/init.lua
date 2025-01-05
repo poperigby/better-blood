@@ -47,7 +47,8 @@ local function onInit()
 end
 
 local function onUpdate()
-    -- TODO: Do a bigger blood splatter for a higher damage hit
+    -- TODO: Do a bigger blood splatter for hit that deals >50% of an actor's max health
+    -- TODO: Allow post-mortem blood splatters
     local newHealth = health.current
 
     local damage = oldHealth - newHealth
