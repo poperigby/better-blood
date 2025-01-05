@@ -47,6 +47,7 @@ local function onInit()
 end
 
 local function onUpdate()
+    -- TODO: Do a bigger blood splatter for a higher damage hit
     local newHealth = health.current
 
     local damage = oldHealth - newHealth

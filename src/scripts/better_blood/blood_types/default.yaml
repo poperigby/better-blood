@@ -1,13 +1,13 @@
 red:
-  - name: "Default Creatures"
+  - name: "Default Creature"
     pattern: "%w+"
     priority: 1000
-  - name: "Default NPCs"
+  - name: "Default NPC"
     pattern: "%w+"
     is_creature: false
     priority: 1000
 blue:
-  - name: "Crabs"
+  - name: "Crab"
     pattern: "crab"
   - name: "Dreugh"
     pattern: "dreugh"
@@ -23,8 +23,10 @@ green:
     pattern: "[sS]crib"
   - name: "Netch"
     pattern: "[nN]etch"
+  - name: "Nix-Hound"
+    pattern: "nix%-hound"
 oil:
-  - name: "Dwemer Constructs"
+  - name: "Dwemer Construct"
     pattern: "[cC]enturion"
 dust:
   - name: "Skeleton"
