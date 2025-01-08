@@ -1,10 +1,13 @@
 HIT_DISTANCE = 8000
 
+
 local nearby = require("openmw.nearby")
 local self = require("openmw.self")
 local types = require("openmw.types")
 local util = require("openmw.util")
+
 local findBloodType = require("scripts.better_blood.actor.blood_type")
+
 
 local bloodType
 
@@ -39,7 +42,7 @@ local function onHit()
         print(damage)
         print(bloodType)
         -- TODO: Do a bigger blood splatter for hit that deals >50% of an actor's max health
-        -- TODO: Allow post-mortem blood splatters
+        -- TODO: Allow postmortem blood splatters
     end
 end
 

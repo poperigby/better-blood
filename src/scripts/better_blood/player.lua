@@ -9,9 +9,11 @@ local oldHealth = health.current
 
 local function onUpdate()
     if self.controls.use ~= self.ATTACK_TYPE.NoAttack then
+        local boundingBox = self.object:getBoundingBox()
+        local rayOrigin = util.vector3(self.position.x, self.position.y, self.position.z + boundingBox.halfSize.z)
         local rayCast = nearby.castRay(
-            self.position,
-            self.position + (self.rotation * util.vector3(0, 1, 0) * camera.getViewDistance())
+            rayOrigin,
+            rayOrigin + (self.rotation * util.vector3(0, 1, 0) * camera.getViewDistance())
         )
 
         print(rayCast)
