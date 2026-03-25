@@ -1,34 +1,21 @@
 {
-  description = "Teal build environment for openmw-better-blood";
-
-  inputs = {
-    devshell.url = "github:numtide/devshell";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
-
-  outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-      ];
-
-      imports = [
-        inputs.devshell.flakeModule
-      ];
-
-      perSystem =
-        { pkgs, ... }:
+    inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    outputs =
+        { nixpkgs, ... }:
+        let
+            inherit (nixpkgs) lib;
+            systems = lib.platforms.linux;
+            forEachSystem = fn: lib.genAttrs systems (system: fn system nixpkgs.legacyPackages.${system});
+        in
         {
-          devshells.default = {
-            packages = with pkgs; [
-              git
-              luajitPackages.cyan
-              luajitPackages.tl
-            ];
-          };
+            devShells = forEachSystem (
+                system: pkgs: {
+                    default = pkgs.mkShell {
+                        packages = with pkgs; [
+                            luajitPackages.cyan
+                        ];
+                    };
+                }
+            );
         };
-    };
-
 }

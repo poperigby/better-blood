@@ -59,13 +59,11 @@ local function validateEntry(entry)
 end
 
 local function mergeTables(target, source)
-    -- A helper function to ensure default values
     local function setDefaults(entry)
         entry.is_creature = entry.is_creature == nil and true or entry.is_creature
         entry.priority = entry.priority or 500
     end
 
-    -- Iterate through each blood type in the source table
     for bloodType, entries in pairs(source) do
         -- Ensure the target has the blood type
         if not target[bloodType] then
