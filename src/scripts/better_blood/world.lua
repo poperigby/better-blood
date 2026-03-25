@@ -7,7 +7,7 @@ local function spawnBlood(data)
     local effect = core.magic.effects.records[core.magic.EFFECT_TYPE.Sanctuary]
     local model = types.Static.records[effect.castStatic].model
 
-    world.vfx.spawn(model, position, {})
+    world.vfx.spawn(model, position, { scale = 0.1 })
 end
 
 return {
