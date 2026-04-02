@@ -10,7 +10,6 @@ local settings = storage.globalSection('SettingsOMWCombat')
 local spawnBloodEffectsOnPlayer = settings:get('spawnBloodEffectsOnPlayer')
 
 local function spawnBloodVfx(position, minihit)
-    print("Is minihit", minihit)
     if isPlayer and not settings:get('spawnBloodEffectsOnPlayer') then
         return
     end

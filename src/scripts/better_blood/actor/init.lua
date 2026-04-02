@@ -15,7 +15,6 @@ end
 
 
 local function onReportHitPos(e)
-    print("Got hit point!", e.hitPos)
     if e.hitObject then
         spawnBloodVfx(e.hitPos)
     end

@@ -1,3 +1,5 @@
+-- From: https://github.com/MaxYari/OpenMWExperimentalMods/blob/main/scripts/MaxYari/experiments/scripts/gutils.lua
+
 local core = require('openmw.core')
 local types = require('openmw.types')
 local util = require('openmw.util')
@@ -14,14 +16,14 @@ local fFightDispMult = core.getGMST("fFightDispMult")
 
 local module = {}
 
-local function readYamlFile(path)   
-    local parsedData = {} 
+local function readYamlFile(path)
+    local parsedData = {}
     if vfs.fileExists(path) then
         local fileHandle, err = vfs.open(path)
         if fileHandle then
             local yamlContent = fileHandle:read("*all")
             fileHandle:close()
-            parsedData = markup.decodeYaml(yamlContent)            
+            parsedData = markup.decodeYaml(yamlContent)
         else
             print("Error opening file:", err)
         end
@@ -287,7 +289,7 @@ local function cachedFunction(fn, delay, startDelay)
             return c1, c2, "cached"
         end
 
-        
+
         c1, c2 = fn(...)
 
         if not isFirstRun then
@@ -355,7 +357,7 @@ local function lerpClamped(a, b, t)
 end
 module.lerpClamped = lerpClamped
 
-local function lerpColor(a,b,t)
+local function lerpColor(a, b, t)
     return util.color.rgb(
         lerpClamped(a.r, b.r, t),
         lerpClamped(a.g, b.g, t),
@@ -504,13 +506,12 @@ function getDetailedStance(actor)
         end
     end
 end
+
 module.getDetailedStance = getDetailedStance
 
 function Actor:getDetailedStance()
     return getDetailedStance(self.gameObject)
 end
-
-
 
 function Actor:canOpenDoor(door)
     local canOpen = true
@@ -574,7 +575,6 @@ function Actor:getAttributeStat(attrId)
     end
     return self.attributeStatDatas[attrId]
 end
-
 
 module.Actor = Actor
 
@@ -744,7 +744,7 @@ function GenericCache:new(ttl)
     function obj:get(key)
         local now = core.getRealTime()
         local cached = self.values[key]
-        if cached and now - cached.createdAt <= ttl then 
+        if cached and now - cached.createdAt <= ttl then
             return cached
         else
             self.values[key] = nil
@@ -756,10 +756,10 @@ function GenericCache:new(ttl)
         local now = core.getRealTime()
 
         if type(data) == "table" then
-            print("Making data readonly") 
-            data = util.makeReadOnly(data) 
+            print("Making data readonly")
+            data = util.makeReadOnly(data)
         end
-        
+
         local cached = {
             createdAt = now,
             data = data
@@ -774,24 +774,25 @@ function GenericCache:new(ttl)
 
     return obj
 end
+
 module.GenericCache = GenericCache
 
 local cellCaches = {}
 local function findNpcsInCellCached(cell, filterFn, cacheKey, cacheTTL)
     if not cacheTTL then cacheTTL = 3 end
-    
+
     if not cellCaches[cell.id] then
         cellCaches[cell.id] = GenericCache:new(cacheTTL)
     end
     local cache = cellCaches[cell.id]
 
     -- Find all npcs who cares (or get them from cache)
-    
+
     local cachedNpcs = cache:get(cacheKey)
     if not cachedNpcs then
-        cachedNpcs = cache:put(cacheKey, aux_util.mapFilter(cell:getAll(types.NPC),filterFn))
+        cachedNpcs = cache:put(cacheKey, aux_util.mapFilter(cell:getAll(types.NPC), filterFn))
     end
-    
+
     return cachedNpcs.data
 end
 module.findNpcsInCellCached = findNpcsInCellCached
@@ -839,7 +840,7 @@ local function spawnObject(recordId, position, cell, onGround)
     print("Spawning object:", recordId, position, cell, onGround)
     local object = world.createObject(recordId, 1)
     if object then
-        object:teleport(cell or "", position, { onGround = onGround})
+        object:teleport(cell or "", position, { onGround = onGround })
     end
     return object
 end
