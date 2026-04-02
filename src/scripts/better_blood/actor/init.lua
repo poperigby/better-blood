@@ -27,11 +27,18 @@ I.Combat.addOnHitHandler(function(a)
     local stance = gutils.getDetailedStance(a.attacker)
     local isRangedAttacker = (stance == gutils.Actor.DET_STANCE.Marksman)
 
-    if a.attacker.type == types.Player and not isRangedAttacker then
-        -- Disable the randomly placed vanilla blood
-        a.hitPos = nil
+    if a.attacker.type == types.Player then
+        -- The hitPos of melee attacks is random, so we'll have to perform a ray cast to
+        -- get the correction position of the hit.
+        if not isRangedAttacker then
+            -- Disable the randomly placed vanilla blood
+            a.hitPos = nil
 
-        a.attacker:sendEvent("BetterBlood_GetHitPos", { sender = self })
+            a.attacker:sendEvent("BetterBlood_GetHitPos", { sender = self })
+        else
+            -- The hitPos for a ranged attack is accurate
+            spawnBloodVfx(a.hitPos)
+        end
     end
 end)
 
