@@ -12,9 +12,9 @@ blue:
   - name: "Dreugh"
     pattern: "dreugh"
 ectoplasm:
-  - name: "Ghosts"
+  - name: "Ghost"
     pattern: "ghost"
-  - name: "Wraiths"
+  - name: "Wraith"
     pattern: "wraith"
 green:
   - name: "Kwama"
