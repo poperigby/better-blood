@@ -6,16 +6,14 @@ local storage = require("openmw.storage")
 local isPlayer = self.type == types.Player
 
 
+local BLOOD_SPLATTER_NIF = 'meshes/better_blood/blood_splatter.nif'
 local settings = storage.globalSection('SettingsOMWCombat')
 local spawnBloodEffectsOnPlayer = settings:get('spawnBloodEffectsOnPlayer')
 
-local function spawnBloodVfx(position, minihit)
+local function spawnBloodVfx(position)
     if isPlayer and not settings:get('spawnBloodEffectsOnPlayer') then
         return
     end
-
-    local scale = 1.0
-    if minihit then scale = 0.5 end
 
     local modelInd = math.random(0, 2)
 
@@ -35,6 +33,8 @@ local function spawnBloodVfx(position, minihit)
         bloodTexture = core.getGMST('Blood_Texture_0')
     end
 
+    core.sound.playSoundFile3d('Sounds/Blood Stuff/blood_gash.wav', self)
+
     core.sendGlobalEvent('SpawnVfx', {
         model = bloodEffectModel,
         position = position,
@@ -42,7 +42,17 @@ local function spawnBloodVfx(position, minihit)
             mwMagicVfx = false,
             particleTextureOverride = bloodTexture,
             useAmbientLight = false,
-            scale = scale
+            scale = 0.5
+        },
+    })
+
+    core.sendGlobalEvent('SpawnVfx', {
+        model = BLOOD_SPLATTER_NIF,
+        position = position,
+        options = {
+            mwMagicVfx = false,
+            useAmbientLight = false,
+            scale = 4.0
         },
     })
 end
