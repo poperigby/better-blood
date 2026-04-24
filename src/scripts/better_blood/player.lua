@@ -1,6 +1,6 @@
 local camera = require("openmw.camera")
 local nearby = require("openmw.nearby")
-local omwself = require("openmw.self")
+local self = require("openmw.self")
 local util = require("openmw.util")
 local async = require("openmw.async")
 
@@ -20,7 +20,7 @@ local function onGetHitPos(e)
 
     -- Cast regular ray first to check for collision with sender
     local regularRayResult = nearby.castRay(rayStart, rayEnd,
-        { ignore = omwself, collisionType = nearby.COLLISION_TYPE.Actor })
+        { ignore = self, collisionType = nearby.COLLISION_TYPE.Actor })
 
     local rayResult = {}
     local isOnSurface = false
@@ -37,7 +37,7 @@ local function onGetHitPos(e)
         end
 
         e.sender:sendEvent("BetterBlood_ReportHitPos", {
-            sender = omwself,
+            sender = self,
             hitObject = rayResult.hitObject,
             hitPos = rayResult.hitPos,
             hitNormal = rayResult.hitNormal,
@@ -46,7 +46,7 @@ local function onGetHitPos(e)
     end)
 
     nearby.asyncCastRenderingRay(renderingRayCallback, rayStart, rayEnd,
-        { ignore = omwself, collisionType = nearby.COLLISION_TYPE.Actor })
+        { ignore = self, collisionType = nearby.COLLISION_TYPE.Actor })
 end
 
 return {
